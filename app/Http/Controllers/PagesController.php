@@ -27,11 +27,15 @@ class PagesController extends Controller
             ->editColumn("created_at", function ($data) {
                 return date("m/d/Y", strtotime($data->created_at));
             })
-            ->addColumn('ID', function ($data) {
-                $update = '<a href="javascript:void(0)" class="btn btn-primary">' . $data->id . '</a>';
-                return $update;
+            ->addColumn('Action', function ($data) {
+                $action = '
+                            <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
+                            <a href="javascript:void(0)" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
+                return $action;
             })
-            ->rawColumns(['ID'])
+            ->rawColumns(['Action'])
+            ->addIndexColumn() // tambahkan line ini
+            ->removeColumn('id') // tambahkan line ini lagi untuk menghilangkan "id"
             ->make(true);
     }
 }

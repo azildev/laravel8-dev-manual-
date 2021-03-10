@@ -50,18 +50,20 @@
                                     <table class="table table-bordered yajra-datatable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Created_at</th>
-                                                <th>ID</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>No</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Created_at</th>
-                                                <th>ID</th>
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -122,7 +124,7 @@
                     processing: true,
                     serverSide: true,
                     ajax: "/pages/getUsers",
-                    columns: [{
+                    columns: [{ data: 'DT_RowIndex', name:'DT_RowIndex'},{
                             data: 'name',
                             name: 'name'
                         },
@@ -134,11 +136,11 @@
                             data: 'created_at',
                             name: 'created_at'
                         },
-                        {
-                            data: 'ID',
-                            name: 'ID'
-                        }
-                    ]
+                        {data: 'Action', name: 'Action', orderable: false, searchable: false}
+                    ],
+                      "columnDefs": [
+                            { "width": "5%", "targets": 0 }
+                         ]
                 });
             });
         </script>
