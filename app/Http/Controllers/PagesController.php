@@ -12,5 +12,10 @@ class PagesController extends Controller
     {
         return view('dashboard.dashboard');
     }
+
+    public function users()
+    {
+        return view('users.index');
+    }
     
 }
