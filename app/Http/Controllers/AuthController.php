@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+Use Alert;
 
 class AuthController extends Controller
 {
@@ -13,10 +14,13 @@ class AuthController extends Controller
         $email = $request->email;
         $pwd   = $request->password;
         if (Auth::attempt(['email' => $email, 'password' => $pwd])) {
+            alert()->success('welcome','message')->persistent('Ok');
             return redirect('dashboard');
             // return "Hai ". Auth::user()->name;
         }else{
-            return "Maaf email atau password yang anda masukan tidak sesuai.";
+            
+            alert()->success('welcome','message')->persistent('Ok');
+            return redirect()->back();
         }
     }
 

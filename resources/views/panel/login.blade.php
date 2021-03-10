@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('panel/style.css') }}" rel="stylesheet">  
-
+       
         <!-- Styles -->
         
 
@@ -19,15 +19,22 @@
             }
         </style>
     </head>
+   
     <body class="antialiased">
+    
         <div class="global-container">
+        
             <div class="card login-form">
+            
                 <div class="card-body">
+                
                     <h5 class="card-title text-center">LOGIN - LARAVEL(VueJS)</h5>
                     <div class="card-text">
+                    
                         <!--
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
                         <form action="{{ url('login') }}" method="post">
+                        
                             {{ @csrf_field() }}
                             <!-- to error: add class "has-danger" -->
                             <div class="form-group">
@@ -49,5 +56,6 @@
                 </div>
             </div>
         </div>
+        @include('sweetalert::alert')
     </body>
 </html>

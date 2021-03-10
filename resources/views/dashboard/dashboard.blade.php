@@ -1,5 +1,5 @@
 @extends('layouts.master')
- @section('title', 'AZIL_DEVELOP')
+ @section('title', 'DASHBOARD :: AZIL_DEVELOP')
  @section('content')
   
                     <div class="container-fluid">

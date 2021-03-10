@@ -32,6 +32,8 @@ Route::middleware(['guest','verifyback'])->group(function () {
 Route::middleware(['auth:sanctum', 'user_already_logged_in','verifyback'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
+    Route::get('/pages/users', [PagesController::class, 'users'])->name('users');
+    Route::get('/pages/getUsers', [PagesController::class, 'getUsers'])->name('pages.getUsers');
 });
 
 // Route::middleware(['auth:sanctum', 'user_already_logged_in'])->get('/dashboard', function () {
