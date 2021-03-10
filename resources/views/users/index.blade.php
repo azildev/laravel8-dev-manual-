@@ -1,7 +1,8 @@
 @extends('layouts.master')
  @section('title', 'USERS :: AZIL_DEVELOP')
  @section('css')
-
+    <link rel="stylesheet" href="{{ asset('css/datatables/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/datatables.min.css') }}" />
  @endsection
  @section('content')
   
@@ -49,19 +50,18 @@
                                     <table class="table table-bordered yajra-datatable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                
-                                                <th>Nama</th>
-
-
-                                                
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Created_at</th>
+                                                <th>ID</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                
-                                                <th>Nama</th>
-
-                                                
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Created_at</th>
+                                                <th>ID</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -78,7 +78,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> Users Baru</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -103,32 +103,6 @@
                                         <label for="inputAddress2">Address 2</label>
                                         <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                        <label for="inputCity">City</label>
-                                        <input type="text" class="form-control" id="inputCity">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                        <label for="inputState">State</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
-                                        </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Check me out
-                                        </label>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Sign in</button>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -140,19 +114,33 @@
                     </div>
  @endsection
  @section('js')
-
-    <script type="text/javascript">
-     $(document).ready(function()
-        {
-            $('.yajra-datatable').DataTable(
-                {
-                    "processing"    : true;
-                    "serverSide"    : true;
-                    "ajax"          : "{{ route('pages.getUsers') }}"
-                    "columns"       : [
-                        { "data": "Nama"},
+    <script src="{{ asset('js/datatables/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script>
+            $(function() {
+                $('.yajra-datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "/pages/getUsers",
+                    columns: [{
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'email',
+                            name: 'email'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'ID',
+                            name: 'ID'
+                        }
                     ]
                 });
-        });
+            });
+        </script>
     </script>
  @endsection

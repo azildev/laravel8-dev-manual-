@@ -14,12 +14,10 @@ class AuthController extends Controller
         $email = $request->email;
         $pwd   = $request->password;
         if (Auth::attempt(['email' => $email, 'password' => $pwd])) {
-            alert()->success('welcome','message')->persistent('Ok');
             return redirect('dashboard');
             // return "Hai ". Auth::user()->name;
         }else{
-            
-            alert()->success('welcome','message')->persistent('Ok');
+            alert()->error('Login Gagal','Email atau password anda salah.')->showConfirmButton('OK', '#3085d6');
             return redirect()->back();
         }
     }

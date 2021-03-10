@@ -21,7 +21,7 @@
     </head>
    
     <body class="antialiased">
-    
+        @include('sweetalert::alert')
         <div class="global-container">
         
             <div class="card login-form">
@@ -56,6 +56,6 @@
                 </div>
             </div>
         </div>
-        @include('sweetalert::alert')
+        
     </body>
 </html>

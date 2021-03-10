@@ -22,12 +22,16 @@ class PagesController extends Controller
     
     public function getUsers()
     {
-      
-        $products = User::select(
-            'name',
-        );
-        return DataTables::of($products)->make(true);
-    
-        // return Datatables::of(User::all())->make(true);
+        $data = User::latest()->get();
+        return Datatables::of($data)
+            ->editColumn("created_at", function ($data) {
+                return date("m/d/Y", strtotime($data->created_at));
+            })
+            ->addColumn('ID', function ($data) {
+                $update = '<a href="javascript:void(0)" class="btn btn-primary">' . $data->id . '</a>';
+                return $update;
+            })
+            ->rawColumns(['ID'])
+            ->make(true);
     }
 }
