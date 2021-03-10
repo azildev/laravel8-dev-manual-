@@ -8,9 +8,9 @@ use Auth;
 class PagesController extends Controller
 {
     //
-    public function index()
+    public function dashboard()
     {
-        return 'HAHAHHA'.Auth::user()->is_admin;
+        return view('dashboard.dashboard');
     }
     
 }

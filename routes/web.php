@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware(['guest','user_is_not_logged_in'])->group(function () {
+Route::middleware(['guest','verifyback'])->group(function () {
     Route::get('/', function () {
         return view('panel.login', ['title' => 'Login :: AZIL_DEVELOP']);
     })->name('login');
@@ -29,10 +29,9 @@ Route::middleware(['guest','user_is_not_logged_in'])->group(function () {
 
 //HALAMAN SETELAH LOGIN -- DASHBOARD
 
-Route::middleware(['auth:sanctum', 'user_already_logged_in'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::middleware(['auth:sanctum', 'user_already_logged_in','verifyback'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
 });
 
 // Route::middleware(['auth:sanctum', 'user_already_logged_in'])->get('/dashboard', function () {

@@ -1,0 +1,1 @@
+<a href="{{ url()->route('logout') }}">Logout</a>

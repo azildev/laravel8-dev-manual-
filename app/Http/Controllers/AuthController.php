@@ -19,4 +19,10 @@ class AuthController extends Controller
             return "Maaf email atau password yang anda masukan tidak sesuai.";
         }
     }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return redirect('/');
+    }
 }
