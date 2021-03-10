@@ -15,20 +15,27 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::middleware(['guest','user_is_not_logged_in'])->get('/', function () {
-    return view('panel.login', ['title' => 'Login :: AZIL_DEVELOP']);
-})->name('login');
+Route::middleware(['guest','user_is_not_logged_in'])->group(function () {
+    Route::get('/', function () {
+        return view('panel.login', ['title' => 'Login :: AZIL_DEVELOP']);
+    })->name('login');
 
-
-Route::match(['get', 'post'], 'login', function(){
-    return redirect('/');
+    Route::match(['get', 'post'], 'login', function(){
+        return redirect('/');
+    });
+    
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
-Route::post('/login', [AuthController::class, 'login']);
+//HALAMAN SETELAH LOGIN -- DASHBOARD
 
-Route::get('/pages/show', [PagesController::class, 'index']);
+Route::middleware(['auth:sanctum', 'user_already_logged_in'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 
-Route::middleware(['auth:sanctum', 'user_already_logged_in'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'user_already_logged_in'])->get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
