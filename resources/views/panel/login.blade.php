@@ -27,7 +27,7 @@
                     <div class="card-text">
                         <!--
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-                        <form action="{{ url('account/login') }}" method="post">
+                        <form action="{{ url('login') }}" method="post">
                             {{ @csrf_field() }}
                             <!-- to error: add class "has-danger" -->
                             <div class="form-group">
