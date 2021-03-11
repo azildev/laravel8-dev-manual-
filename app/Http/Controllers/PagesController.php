@@ -30,12 +30,18 @@ class PagesController extends Controller
             ->addColumn('Action', function ($data) {
                 $action = '
                             <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
-                            <a href="javascript:void(0)" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
+                            <a href="javascript:void(0)" class="btn btn-danger remove-user" data-id="'.$data->id.'" data-action="{{ '.route('pages.destroy_users',$data->id).' }}"><i class="fa fa-trash"></i></a>';
                 return $action;
             })
             ->rawColumns(['Action'])
             ->addIndexColumn() // tambahkan line ini
             ->removeColumn('id') // tambahkan line ini lagi untuk menghilangkan "id"
             ->make(true);
+    }
+
+    public function destroy_users(Request $request,$id)
+    {
+      User::where('id',$id)->delete();
+      return back();
     }
 }

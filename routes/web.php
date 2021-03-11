@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum', 'user_already_logged_in','verifyback'])->grou
     Route::get('/dashboard', [PagesController::class, 'dashboard'])->name('dashboard');
     Route::get('/pages/users', [PagesController::class, 'users'])->name('users');
     Route::get('/pages/getUsers', [PagesController::class, 'getUsers'])->name('pages.getUsers');
+    Route::delete('/pages/users/{id}',[PagesController::class, 'destroy_users'])->name('pages.destroy_users');
 });
 
 // Route::middleware(['auth:sanctum', 'user_already_logged_in'])->get('/dashboard', function () {
