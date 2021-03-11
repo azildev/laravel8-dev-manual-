@@ -1,11 +1,12 @@
 @extends('layouts.master')
  @section('title', 'USERS :: AZIL_DEVELOP')
- @section('css')
+ @push('css')
     <link rel="stylesheet" href="{{ asset('css/datatables/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/datatables.min.css') }}" />
- @endsection
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+ @endpush
  @section('content')
-  
+                    
                     <div class="container-fluid">
                         <h1 class="mt-4">Users</h1>
                         <ol class="breadcrumb mb-4">
@@ -32,10 +33,8 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body"><i class="fa fa-plus"></i> Tambah Users</div>
-                                    
+        
                                         <a class="small text-white stretched-link" data-toggle="modal" data-target="#AddUsers" href="#"></a>
-                                        
-                                   
                                 </div>
                             </div>
                         </div>
@@ -76,48 +75,13 @@
                     </div>
 
                     <!-- Modal Add Users-->
-                    <div class="modal fade" id="AddUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> Users Baru</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress">Address</label>
-                                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress2">Address 2</label>
-                                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('users.addusers')
  @endsection
- @section('js')
+ @push('js')
+    
     <script src="{{ asset('js/datatables/jquery-3.3.1.js') }}"></script>
     <script src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
     <script>
             $(function() {
                 $('.yajra-datatable').DataTable({
@@ -144,31 +108,47 @@
                 });
             });
 
-            $("body").on("click",".remove-user",function(){
-                var current_object = $(this);
-                swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to recover this imaginary file!",
-                    type: "error",
-                    showCancelButton: true,
-                    dangerMode: true,
-                    cancelButtonClass: '#DD6B55',
-                    confirmButtonColor: '#dc3545',
-                    confirmButtonText: 'Delete!',
-                },function (result) {
-                    if (result) {
-                        var action = current_object.attr('data-action');
-                        var token = jQuery('meta[name="csrf-token"]').attr('content');
-                        var id = current_object.attr('data-id');
+            function deleteConfirmation(id) {
+                swal.fire({
+                    title: "Delete?",
+                    icon: 'question',
+                    text: "Please ensure and then confirm!",
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: !0
+                }).then(function (e) {
 
-                        $('body').html("<form class='form-inline remove-form' method='post' action='"+action+"'></form>");
-                        $('body').find('.remove-form').append('<input name="_method" type="hidden" value="delete">');
-                        $('body').find('.remove-form').append('<input name="_token" type="hidden" value="'+token+'">');
-                        $('body').find('.remove-form').append('<input name="id" type="hidden" value="'+id+'">');
-                        $('body').find('.remove-form').submit();
+                    if (e.value === true) {
+                        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{url('/pages/destroy_users')}}/" + id,
+                            data: {_token: CSRF_TOKEN},
+                            dataType: 'JSON',
+                            success: function (results) {
+                                if (results.success === true) {
+                                    swal.fire("Done!", results.message, "success");
+                                    // refresh page after 2 seconds
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },2000);
+                                } else {
+                                    swal.fire("Error!", results.message, "error");
+                                }
+                            }
+                        });
+
+                    } else {
+                        e.dismiss;
                     }
-                });
-            });
+
+                }, function (dismiss) {
+                    return false;
+                })
+            }
         </script>
     </script>
- @endsection
+ @endpush

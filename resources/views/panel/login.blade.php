@@ -28,7 +28,7 @@
             
                 <div class="card-body">
                 
-                    <h5 class="card-title text-center">LOGIN - LARAVEL(VueJS)</h5>
+                    <h5 class="card-title text-center">LOGIN - LARAVEL 8</h5>
                     <div class="card-text">
                     
                         <!--
@@ -39,12 +39,12 @@
                             <!-- to error: add class "has-danger" -->
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email </label>
-                                <input type="email" name="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="email" name="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <!-- <a href="#" style="float:right;font-size:12px;">Forgot password?</a> -->
-                                <input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1">
+                                <input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                             

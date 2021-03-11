@@ -30,7 +30,7 @@ class PagesController extends Controller
             ->addColumn('Action', function ($data) {
                 $action = '
                             <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-pencil"></i></a> 
-                            <a href="javascript:void(0)" class="btn btn-danger remove-user" data-id="'.$data->id.'" data-action="{{ '.route('pages.destroy_users',$data->id).' }}"><i class="fa fa-trash"></i></a>';
+                            <button type="submit" class="btn btn-danger" onclick="deleteConfirmation('.$data->id.')"><i class="fa fa-trash"></i></button>';
                 return $action;
             })
             ->rawColumns(['Action'])
@@ -39,9 +39,23 @@ class PagesController extends Controller
             ->make(true);
     }
 
-    public function destroy_users(Request $request,$id)
+    public function destroy_users($id)
     {
-      User::where('id',$id)->delete();
-      return back();
+        $delete = User::destroy($id);
+
+            // check data deleted or not
+            if ($delete == 1) {
+                $success = true;
+                $message = "User deleted successfully";
+            } else {
+                $success = true;
+                $message = "User not found";
+            }
+
+            //  return response
+            return response()->json([
+                'success' => $success,
+                'message' => $message,
+            ]);
     }
 }
